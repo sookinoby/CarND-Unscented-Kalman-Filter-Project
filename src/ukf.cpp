@@ -42,10 +42,10 @@ UKF::UKF() {
 
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 3;
+  std_a_ = 2;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd_ = 0.5;
+  std_yawdd_ = 0.4;
 
   // Laser measurement noise standard deviation position1 in m
   std_laspx_ = 0.15;
@@ -65,12 +65,18 @@ UKF::UKF() {
 
 
   //example covariance matrix
-  P_ <<     0.5,   -0.0013,    0.0030,   -0.0022,   -0.0020,
-          -0.0013,   0.5,    0.0011,    0.0071,    0.0060,
+  P_ <<     1,   -0.0013,    0.0030,   -0.0022,   -0.0020,
+          -0.0013,   1,    0.0011,    0.0071,    0.0060,
           0.0030,    0.0011,    1,    0.0007,    0.0008,
           -0.0022,    0.0071,    0.0007,    1,    0.0100,
           -0.0020,    0.0060,    0.0008,    0.0100,    1;
 
+  double weight_0 = lambda_/(lambda_+n_aug_);
+  weights_(0) = weight_0;
+  for (int i=1; i < 2*n_aug_ +1; i++) {  //2n+1 weights
+    double weight = 0.5/(n_aug_+lambda_);
+    weights_(i) = weight;
+  }
   /**
   TODO:
 
@@ -169,10 +175,14 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
   if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
     // Radar updates
+    if(use_radar_ == true)
        UpdateRadar(meas_package);
+
+
 
   } else {
     // Laser updates
+    if(use_laser_==true)
       UpdateLidar(meas_package);
   }
 
@@ -265,12 +275,7 @@ void UKF::Prediction(double delta_t) {
     Xsig_pred_(4,i) = yawd_p;
   }
 
-  double weight_0 = lambda_/(lambda_+n_aug_);
-  weights_(0) = weight_0;
-  for (int i=1; i < 2*n_aug_ +1; i++) {  //2n+1 weights
-    double weight = 0.5/(n_aug_+lambda_);
-    weights_(i) = weight;
-  }
+
 
   //predicted state mean
   x_.fill(0.0);
@@ -385,6 +390,9 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
   //update state mean and covariance matrix
   x_ = x_ + K * z_diff;
   P_ = P_ - K*S*K.transpose();
+
+  NIS_laser_ = z_diff.transpose() * S_inverse * z_diff;
+  cout <<" NIS Laser : "  <<NIS_laser_ <<"\n";
 }
 
 /**
@@ -451,7 +459,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   VectorXd z = VectorXd(n_z);
   z << meas_package.raw_measurements_[0],
        meas_package.raw_measurements_[1],
-       3;
+          meas_package.raw_measurements_[2];
 
   MatrixXd Tc = MatrixXd(n_x_, n_z);
   //calculate cross correlation matrix
@@ -487,5 +495,8 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   //update state mean and covariance matrix
   x_ = x_ + K * z_diff;
   P_ = P_ - K*S*K.transpose();
+
+  NIS_radar_ = z_diff.transpose() * S_inverse * z_diff;
+  cout <<" NIS Radar : "  <<NIS_radar_ << "\n";
 
 }
