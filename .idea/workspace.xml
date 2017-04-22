@@ -13,6 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="07c4a68c-17ec-4688-b650-5b6b764ae33e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ukf.cpp" afterPath="$PROJECT_DIR$/src/ukf.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ukf.h" afterPath="$PROJECT_DIR$/src/ukf.h" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,8 +41,8 @@
       <file leaf-file-name="ukf.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ukf.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1817">
-              <caret line="384" column="7" lean-forward="false" selection-start-line="384" selection-start-column="7" selection-end-line="384" selection-end-column="7" />
+            <state relative-caret-position="-2315">
+              <caret line="380" column="2" lean-forward="false" selection-start-line="380" selection-start-column="2" selection-end-line="380" selection-end-column="2" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -82,8 +83,8 @@
       <file leaf-file-name="ukf.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ukf.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="670">
-              <caret line="66" column="0" lean-forward="true" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+            <state relative-caret-position="908">
+              <caret line="76" column="2" lean-forward="true" selection-start-line="76" selection-start-column="2" selection-end-line="76" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -105,6 +106,9 @@
     <findStrings>
       <find>3</find>
       <find>meas_package</find>
+      <find>R</find>
+      <find>std_laspx_</find>
+      <find>R_radar_</find>
       <find>use</find>
     </findStrings>
   </component>
@@ -114,8 +118,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/ukf.h" />
         <option value="$PROJECT_DIR$/src/tools.cpp" />
+        <option value="$PROJECT_DIR$/src/ukf.h" />
         <option value="$PROJECT_DIR$/src/ukf.cpp" />
       </list>
     </option>
@@ -409,12 +413,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1492707960941</updated>
-      <workItem from="1492707962248" duration="30889000" />
+      <workItem from="1492707962248" duration="34457000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30889000" />
+    <option name="totallyTimeSpent" value="34457000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -425,7 +429,7 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28060672" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28060672" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -480,22 +484,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tools.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ukf.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="66" column="0" lean-forward="true" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ground_truth_package.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -522,6 +510,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ukf.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="908">
+          <caret line="76" column="2" lean-forward="true" selection-start-line="76" selection-start-column="2" selection-end-line="76" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tools.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3485">
@@ -534,8 +538,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ukf.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1817">
-          <caret line="384" column="7" lean-forward="false" selection-start-line="384" selection-start-column="7" selection-end-line="384" selection-end-column="7" />
+        <state relative-caret-position="-2315">
+          <caret line="380" column="2" lean-forward="false" selection-start-line="380" selection-start-column="2" selection-end-line="380" selection-end-column="2" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
