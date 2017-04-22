@@ -65,11 +65,11 @@ UKF::UKF() {
 
 
   //example covariance matrix
-  P_ <<     1,   -0.0013,    0.0030,   -0.0022,   -0.0020,
-          -0.0013,   1,    0.0011,    0.0071,    0.0060,
-          0.0030,    0.0011,    1,    0.0007,    0.0008,
-          -0.0022,    0.0071,    0.0007,    1,    0.0100,
-          -0.0020,    0.0060,    0.0008,    0.0100,    1;
+  P_ <<     1.0,   0.0,    0.0,   0.0,   0.0,
+          0.0,   1.0,    0.0,    0.0,    0.0,
+          0.0,    0.0,    1.0,    0.0,    0.0,
+          0.0,    0.0,    0.0,    1.0,    0.0,
+          0.0,    0.0,    0.0,    0.0,    1.0;
 
   double weight_0 = lambda_/(lambda_+n_aug_);
   weights_(0) = weight_0;
@@ -127,6 +127,11 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
       float px = rho*cos(phi);
       float py = rho*sin(phi);
 
+      if ( fabs(px) < 0.001 && fabs(py) < 0.001 )
+      {
+                px = 0.001;
+                py = 0.001;
+      }
 
       x_ << px, py, 0, 0,0;
       previous_timestamp_ = meas_package.timestamp_;
@@ -135,7 +140,16 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
       /**
       Initialize state.
       */
-      x_ << meas_package.raw_measurements_[0], meas_package.raw_measurements_[1], 0, 0,0;
+      float px =  meas_package.raw_measurements_[0];
+      float py = meas_package.raw_measurements_[1];
+
+      if ( fabs(px) < 0.001 && fabs(py) < 0.001 )
+      {
+        px = 0.001;
+        py = 0.001;
+      }
+
+      x_ <<px,py, 0, 0,0;
       previous_timestamp_ = meas_package.timestamp_;
     }
 
@@ -161,6 +175,12 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   previous_timestamp_ = meas_package.timestamp_;
 
 
+  while (dt > 0.2)
+   {
+          double step = 0.1;
+          Prediction(step);
+          dt -= step;
+   }
   Prediction(dt);
 
   /*****************************************************************************
@@ -353,8 +373,16 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
   S = S + R;
 
   VectorXd z = VectorXd(n_z);
-  z << meas_package.raw_measurements_[0],
-          meas_package.raw_measurements_[1];
+  float px =  meas_package.raw_measurements_[0];
+  float py = meas_package.raw_measurements_[1];
+  if ( fabs(px) < 0.001 && fabs(py) < 0.001 )
+  {
+    px = 0.001;
+    py = 0.001;
+  }
+
+  z << px,
+       py;
 
   MatrixXd Tc = MatrixXd(n_x_, n_z);
   //calculate cross correlation matrix
@@ -422,6 +450,15 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
     double v1 = cos(yaw)*v;
     double v2 = sin(yaw)*v;
 
+    float px =  meas_package.raw_measurements_[0];
+    float py = meas_package.raw_measurements_[1];
+
+    if ( fabs(p_x) < 0.001 && fabs(p_y) < 0.001 )
+    {
+      p_x = 0.001;
+      p_y = 0.001;
+    }
+
     // measurement model
     Zsig(0,i) = sqrt(p_x*p_x + p_y*p_y);                        //r
     Zsig(1,i) = atan2(p_y,p_x);                                 //phi
@@ -457,6 +494,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   S = S + R;
 
   VectorXd z = VectorXd(n_z);
+
   z << meas_package.raw_measurements_[0],
        meas_package.raw_measurements_[1],
           meas_package.raw_measurements_[2];
