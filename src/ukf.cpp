@@ -18,6 +18,9 @@ UKF::UKF() {
   // if this is false, radar measurements will be ignored (except during init)
   use_radar_ = true;
 
+  // Setting up is initilised to false. With this initialisation it wont work in other compilers.
+  is_initialized_ = false;
+
   //number of paramters in state vector
   n_x_ = 5;
 
@@ -378,7 +381,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
   }
 
   //add measurement noise covariance matrix
-  
+
   S = S + R_laser_;
 
   VectorXd z = VectorXd(n_z);
